@@ -1,0 +1,1038 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#16865b">
+<title>Kenali Aku! — Quiz Sahabat</title>
+
+<style>
+:root {
+  --green: #16865b;
+  --dark: #10533d;
+  --lime: #d8f36a;
+  --cream: #fff9e9;
+  --ink: #20352b;
+  --shadow: 0 12px 30px #174f3520;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 10% 5%, #e9f8c7, transparent 26%),
+    radial-gradient(circle at 90% 10%, #d8f3fa, transparent 25%),
+    var(--cream);
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  color: var(--ink);
+}
+
+button, input, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 14px;
+  padding: 12px 17px;
+  font-weight: bold;
+  transition: .15s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid orange;
+}
+
+.topbar {
+  background: var(--green);
+  color: white;
+  padding: 15px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 0 #0d6946;
+}
+
+.brand {
+  font-size: 1.3rem;
+  font-weight: 1000;
+}
+
+.brand span {
+  color: var(--lime);
+}
+
+main {
+  width: min(900px, 92%);
+  margin: 28px auto 60px;
+}
+
+.hero {
+  text-align: center;
+  padding: 18px 10px 26px;
+}
+
+.mascot {
+  font-size: 3.3rem;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  margin: 8px 0;
+  color: var(--dark);
+}
+
+.hero p {
+  max-width: 650px;
+  margin: auto;
+  color: #557064;
+  line-height: 1.6;
+}
+
+.chips {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.chip {
+  background: white;
+  border: 2px solid #dce9ce;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: .83rem;
+  font-weight: bold;
+}
+
+.panel {
+  background: white;
+  border: 2px solid #e5eddc;
+  border-radius: 24px;
+  padding: clamp(18px, 4vw, 30px);
+  box-shadow: var(--shadow);
+  margin: 18px 0;
+}
+
+.panel h2 {
+  margin-top: 0;
+  color: var(--dark);
+}
+
+.sub {
+  color: #718278;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 13px 0;
+}
+
+.field label {
+  font-size: .92rem;
+  font-weight: bold;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  border: 2px solid #dce7dc;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fcfdf9;
+  color: var(--ink);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 16px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.btn-primary {
+  background: var(--green);
+  color: white;
+}
+
+.btn-secondary {
+  background: var(--lime);
+  color: #27452d;
+}
+
+.btn-quiet {
+  background: #eef5e8;
+  color: #355642;
+}
+
+.btn-danger {
+  background: #ffe2e4;
+  color: #963d4a;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.question-editor {
+  border: 2px dashed #dce8d5;
+  border-radius: 17px;
+  padding: 15px;
+  margin: 13px 0;
+  background: #fbfdf8;
+}
+
+.question-editor h3 {
+  margin-top: 0;
+}
+
+.option-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.hint {
+  font-size: .82rem;
+  color: #75847a;
+  line-height: 1.5;
+}
+
+.question-card {
+  padding: 18px;
+  border: 2px solid #e5eddf;
+  border-radius: 18px;
+  margin: 14px 0;
+}
+
+.question-card h3 {
+  margin-top: 0;
+}
+
+.answers {
+  display: grid;
+  gap: 9px;
+}
+
+.answer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 2px solid #e4eadf;
+  border-radius: 13px;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.answer:has(input:checked) {
+  border-color: var(--green);
+  background: #eef9ee;
+}
+
+.answer input {
+  accent-color: var(--green);
+  width: 18px;
+  height: 18px;
+}
+
+.progress-wrap {
+  height: 9px;
+  border-radius: 99px;
+  background: #e7efdf;
+  overflow: hidden;
+  margin: 12px 0 20px;
+}
+
+.progress {
+  height: 100%;
+  background: var(--green);
+  width: 0;
+  transition: width .2s;
+}
+
+.score {
+  font-size: clamp(3rem, 12vw, 5.8rem);
+  font-weight: 1000;
+  color: var(--green);
+  margin: 12px 0;
+}
+
+.sharebox {
+  background: #f3f8ec;
+  border: 2px solid #dfebd6;
+  padding: 13px;
+  border-radius: 14px;
+  overflow-wrap: anywhere;
+}
+
+.footer {
+  text-align: center;
+  color: #829086;
+  font-size: .8rem;
+  padding: 15px;
+}
+
+@media(max-width: 600px) {
+  .grid, .option-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions button {
+    width: 100%;
+  }
+
+  .panel {
+    border-radius: 19px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="brand">🌿 Kenali<span>Aku!</span></div>
+  <div>Quiz seru bareng sahabat ✨</div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="mascot">🌴 🐥 🐯 🌴</div>
+  <h1>Seberapa Kenal Kamu<br>Dengan Aku?</h1>
+  <p>
+    Buat quiz tentang kepribadianmu, bagikan kepada teman,
+    lalu lihat siapa yang paling mengenal dirimu!
+  </p>
+  <div class="chips">
+    <span class="chip">🍜 Makanan</span>
+    <span class="chip">🎬 Film</span>
+    <span class="chip">📺 Kartun</span>
+    <span class="chip">🎨 Hobi</span>
+    <span class="chip">💚 Kepribadian</span>
+  </div>
+</section>
+
+<section id="creator" class="panel">
+  <h2>🎨 Buat Quiz Kamu</h2>
+  <p class="sub">
+    Masukkan namamu, atur pertanyaan, dan tentukan jawaban yang benar.
+  </p>
+
+  <div class="grid">
+    <div class="field">
+      <label for="ownerName">Nama pembuat quiz</label>
+      <input id="ownerName" maxlength="50"
+             placeholder="Contoh: Mei Mei">
+    </div>
+
+    <div class="field">
+      <label for="quizTitle">Judul quiz</label>
+      <input id="quizTitle" maxlength="80"
+             value="Seberapa kenal kamu denganku?">
+    </div>
+  </div>
+
+  <div id="editors"></div>
+
+  <div class="actions">
+    <button id="addQuestion" class="btn-quiet">
+      ＋ Tambah Pertanyaan
+    </button>
+    <button id="makeLink" class="btn-primary">
+      Buat Link Quiz ↗
+    </button>
+  </div>
+
+  <p class="hint">
+    Setiap pertanyaan memiliki empat pilihan jawaban.
+    Pilih satu jawaban yang benar. Maksimal 30 pertanyaan.
+  </p>
+</section>
+
+<section id="sharePanel" class="panel hidden">
+  <h2>🔗 Quiz Siap Dibagikan!</h2>
+  <p class="sub">
+    Salin link berikut dan kirim kepada temanmu.
+  </p>
+
+  <div id="shareUrl" class="sharebox"></div>
+
+  <div class="actions">
+    <button id="copyLink" class="btn-primary">Salin Link</button>
+    <button id="openQuiz" class="btn-secondary">Coba Quiz</button>
+    <button id="editQuiz" class="btn-quiet">Edit Quiz</button>
+  </div>
+</section>
+
+<section id="intro" class="panel hidden">
+  <h2 id="introTitle">Quiz Sahabat</h2>
+  <p id="introDesc" class="sub"></p>
+
+  <div class="field">
+    <label for="playerName">Masukkan namamu sebelum mulai</label>
+    <input id="playerName" maxlength="50"
+           placeholder="Siapa namamu?">
+  </div>
+
+  <div class="actions">
+    <button id="startQuiz" class="btn-primary">
+      Mulai Menjawab ✨
+    </button>
+    <button id="introEdit" class="btn-quiet">
+      Buat/Edit Quiz
+    </button>
+  </div>
+</section>
+
+<section id="playing" class="panel hidden">
+  <div id="playerGreeting"></div>
+
+  <div class="progress-wrap">
+    <div id="progress" class="progress"></div>
+  </div>
+
+  <div id="questions"></div>
+
+  <div class="actions">
+    <button id="submitAnswers" class="btn-primary">
+      Lihat Skor 🎉
+    </button>
+  </div>
+</section>
+
+<section id="result" class="panel hidden">
+  <div style="font-size:3rem">🎉 🥳 🌟</div>
+  <h2 id="resultTitle">Hasil Quiz</h2>
+  <div id="score" class="score">0/0</div>
+  <p id="resultMessage" class="sub"></p>
+
+  <div id="review"></div>
+
+  <div class="actions">
+    <button id="again" class="btn-primary">Coba Lagi</button>
+    <button id="createOwn" class="btn-secondary">
+      Buat Quiz Tentang Aku ↗
+    </button>
+    <button id="resultEdit" class="btn-quiet">Edit Quiz Ini</button>
+  </div>
+</section>
+
+<div class="footer">
+  Dibuat untuk seru-seruan bersama teman 💚
+</div>
+
+</main>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+
+  const categories = [
+    {
+      name: "🍜 Makanan favorit",
+      question: "Apa makanan favoritku?",
+      options: ["Mie ayam", "Bakso", "Nasi goreng", "Seblak"]
+    },
+    {
+      name: "🥤 Minuman favorit",
+      question: "Apa minuman yang paling kusuka?",
+      options: ["Es teh", "Matcha", "Jus buah", "Kopi"]
+    },
+    {
+      name: "🎬 Genre film",
+      question: "Genre film apa yang paling kusuka?",
+      options: ["Komedi", "Horor", "Romantis", "Petualangan"]
+    },
+    {
+      name: "📺 Kartun favorit",
+      question: "Kartun apa yang paling kusuka?",
+      options: ["Upin & Ipin", "SpongeBob", "Doraemon", "Tom and Jerry"]
+    },
+    {
+      name: "🎵 Musik",
+      question: "Musik apa yang sering kudengarkan?",
+      options: ["Pop", "K-Pop", "Dangdut", "Indie/lo-fi"]
+    },
+    {
+      name: "🎨 Hobi",
+      question: "Kegiatan apa yang paling kusuka?",
+      options: ["Nonton film", "Membaca", "Main game", "Jalan-jalan"]
+    },
+    {
+      name: "🌈 Warna favorit",
+      question: "Apa warna favoritku?",
+      options: ["Hijau", "Biru", "Hitam", "Pink"]
+    },
+    {
+      name: "🐾 Hewan favorit",
+      question: "Apa hewan favoritku?",
+      options: ["Kucing", "Kelinci", "Harimau", "Burung"]
+    },
+    {
+      name: "🏖️ Tempat liburan",
+      question: "Aku lebih suka liburan ke mana?",
+      options: ["Pantai", "Gunung", "Kota", "Di rumah"]
+    },
+    {
+      name: "💬 Kepribadian",
+      question: "Kalau ada masalah, biasanya aku...",
+      options: [
+        "Cerita ke teman",
+        "Menyendiri dulu",
+        "Mencari solusi",
+        "Mengalihkan perhatian"
+      ]
+    },
+    {
+      name: "🌙 Waktu favorit",
+      question: "Aku lebih aktif pada waktu...",
+      options: ["Pagi", "Siang", "Sore", "Malam"]
+    },
+    {
+      name: "🎁 Hal yang kusuka",
+      question: "Hal kecil apa yang membuatku senang?",
+      options: [
+        "Dikasih makanan",
+        "Dipuji",
+        "Ditemani",
+        "Dapat hadiah"
+      ]
+    }
+  ];
+
+  let quiz = {
+    owner: "",
+    title: "Seberapa kenal kamu denganku?",
+    questions: []
+  };
+
+  let player = "";
+  let answers = [];
+  let latestLink = "";
+
+  function defaultQuestion(index = 0) {
+    const c = categories[index % categories.length];
+
+    return {
+      category: c.name,
+      text: c.question,
+      options: [...c.options],
+      correct: 0
+    };
+  }
+
+  function show(id) {
+    $(id).classList.remove("hidden");
+  }
+
+  function hide(id) {
+    $(id).classList.add("hidden");
+  }
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[char]);
+  }
+
+  function encodeQuiz(data) {
+    const bytes = new TextEncoder().encode(JSON.stringify(data));
+    let binary = "";
+
+    bytes.forEach(byte => {
+      binary += String.fromCharCode(byte);
+    });
+
+    return btoa(binary)
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/g, "");
+  }
+
+  function decodeQuiz(value) {
+    value = value.replace(/-/g, "+").replace(/_/g, "/");
+
+    while (value.length % 4) {
+      value += "=";
+    }
+
+    const binary = atob(value);
+    const bytes = Uint8Array.from(binary, char =>
+      char.charCodeAt(0)
+    );
+
+    return JSON.parse(new TextDecoder().decode(bytes));
+  }
+
+  function validQuiz(data) {
+    return data &&
+      typeof data.owner === "string" &&
+      typeof data.title === "string" &&
+      Array.isArray(data.questions) &&
+      data.questions.length > 0 &&
+      data.questions.length <= 30 &&
+      data.questions.every(q =>
+        typeof q.text === "string" &&
+        Array.isArray(q.options) &&
+        q.options.length === 4 &&
+        q.options.every(o => typeof o === "string") &&
+        Number.isInteger(q.correct) &&
+        q.correct >= 0 &&
+        q.correct < 4
+      );
+  }
+
+  function renderEditors() {
+    const root = $("editors");
+    root.innerHTML = "";
+
+    quiz.questions.forEach((q, i) => {
+      const box = document.createElement("div");
+      box.className = "question-editor";
+
+      box.innerHTML = `
+        <h3>Pertanyaan ${i + 1}</h3>
+
+        <div class="field">
+          <label>Kategori</label>
+          <select class="category"></select>
+        </div>
+
+        <div class="field">
+          <label>Teks pertanyaan</label>
+          <input class="qtext" maxlength="180"
+                 placeholder="Tulis pertanyaanmu">
+        </div>
+
+        <div class="field">
+          <label>Pilihan jawaban</label>
+          <div class="option-grid">
+            ${q.options.map((_, j) => `
+              <input class="opt" maxlength="100"
+                     aria-label="Pilihan ${j + 1}"
+                     placeholder="Pilihan ${j + 1}">
+            `).join("")}
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Jawaban yang benar</label>
+          <select class="correct">
+            ${q.options.map((_, j) => `
+              <option value="${j}">Pilihan ${j + 1}</option>
+            `).join("")}
+          </select>
+        </div>
+
+        <button class="btn-danger remove" type="button">
+          Hapus Pertanyaan
+        </button>
+      `;
+
+      const category = box.querySelector(".category");
+
+      category.innerHTML =
+        categories.map((c, j) =>
+          `<option value="${j}">${c.name}</option>`
+        ).join("") +
+        `<option value="custom">✏️ Kategori sendiri</option>`;
+
+      const found = categories.findIndex(c => c.name === q.category);
+      category.value = found >= 0 ? String(found) : "custom";
+
+      box.querySelector(".qtext").value = q.text;
+
+      box.querySelectorAll(".opt").forEach((input, j) => {
+        input.value = q.options[j] || "";
+      });
+
+      box.querySelector(".correct").value = String(q.correct);
+
+      category.addEventListener("change", () => {
+        if (category.value === "custom") {
+          const custom = prompt(
+            "Masukkan nama kategori:",
+            "Kategori pilihanku"
+          );
+
+          if (custom && custom.trim()) {
+            q.category = custom.trim().slice(0, 60);
+          }
+
+          renderEditors();
+          return;
+        }
+
+        const selected = categories[Number(category.value)];
+
+        q.category = selected.name;
+        q.text = selected.question;
+        q.options = [...selected.options];
+        q.correct = 0;
+
+        renderEditors();
+      });
+
+      box.querySelector(".qtext").addEventListener("input", e => {
+        q.text = e.target.value;
+      });
+
+      box.querySelectorAll(".opt").forEach((input, j) => {
+        input.addEventListener("input", e => {
+          q.options[j] = e.target.value;
+        });
+      });
+
+      box.querySelector(".correct").addEventListener("change", e => {
+        q.correct = Number(e.target.value);
+      });
+
+      box.querySelector(".remove").addEventListener("click", () => {
+        quiz.questions.splice(i, 1);
+        renderEditors();
+      });
+
+      root.appendChild(box);
+    });
+  }
+
+  function buildLink() {
+    quiz.owner = $("ownerName").value.trim();
+    quiz.title = $("quizTitle").value.trim() ||
+      "Seberapa kenal kamu denganku?";
+
+    if (!quiz.owner) {
+      alert("Masukkan nama pembuat quiz terlebih dahulu!");
+      $("ownerName").focus();
+      return;
+    }
+
+    if (quiz.questions.length === 0) {
+      alert("Tambahkan minimal satu pertanyaan.");
+      return;
+    }
+
+    for (let i = 0; i < quiz.questions.length; i++) {
+      const q = quiz.questions[i];
+
+      if (!q.text.trim() || q.options.some(o => !o.trim())) {
+        alert(
+          `Lengkapi pertanyaan dan pilihan pada nomor ${i + 1}.`
+        );
+        return;
+      }
+
+      q.text = q.text.trim();
+      q.options = q.options.map(o => o.trim());
+    }
+
+    latestLink =
+      location.href.split("#")[0] + "#quiz=" + encodeQuiz(quiz);
+
+    $("shareUrl").textContent = latestLink;
+    show("sharePanel");
+
+    $("sharePanel").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+
+  function showCreator() {
+    hide("intro");
+    hide("playing");
+    hide("result");
+    hide("sharePanel");
+    show("creator");
+
+    $("ownerName").value = quiz.owner || "";
+    $("quizTitle").value = quiz.title ||
+      "Seberapa kenal kamu denganku?";
+
+    if (!quiz.questions.length) {
+      quiz.questions = [
+        defaultQuestion(0),
+        defaultQuestion(3),
+        defaultQuestion(5)
+      ];
+    }
+
+    renderEditors();
+
+    $("creator").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+
+  function showIntro() {
+    hide("creator");
+    hide("sharePanel");
+    hide("playing");
+    hide("result");
+    show("intro");
+
+    $("introTitle").textContent = quiz.title;
+    $("introDesc").textContent =
+      `Quiz buatan ${quiz.owner}. Jawab pertanyaan tentang dirinya!`;
+
+    $("playerName").value = "";
+
+    $("intro").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+
+  function startQuiz() {
+    player = $("playerName").value.trim();
+
+    if (!player) {
+      alert("Masukkan namamu sebelum mulai!");
+      $("playerName").focus();
+      return;
+    }
+
+    answers = Array(quiz.questions.length).fill(null);
+
+    hide("intro");
+    show("playing");
+
+    $("playerGreeting").innerHTML =
+      `<h2>Semangat, ${escapeHtml(player)}! 💚</h2>
+       <p class="sub">Pilih satu jawaban untuk setiap pertanyaan.</p>`;
+
+    renderQuestions();
+
+    $("playing").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+
+  function renderQuestions() {
+    const root = $("questions");
+    root.innerHTML = "";
+
+    quiz.questions.forEach((q, i) => {
+      const card = document.createElement("div");
+      card.className = "question-card";
+
+      card.innerHTML = `
+        <h3>${i + 1}. ${escapeHtml(q.text)}</h3>
+        <div class="answers">
+          ${q.options.map((option, j) => `
+            <label class="answer">
+              <input type="radio" name="question-${i}"
+                     value="${j}">
+              <span>${escapeHtml(option)}</span>
+            </label>
+          `).join("")}
+        </div>
+      `;
+
+      card.querySelectorAll("input").forEach(input => {
+        input.addEventListener("change", () => {
+          answers[i] = Number(input.value);
+
+          const completed =
+            answers.filter(answer => answer !== null).length;
+
+          $("progress").style.width =
+            completed / quiz.questions.length * 100 + "%";
+        });
+      });
+
+      root.appendChild(card);
+    });
+  }
+
+  function submitAnswers() {
+    const missing = answers.findIndex(answer => answer === null);
+
+    if (missing !== -1) {
+      alert(`Pertanyaan nomor ${missing + 1} belum dijawab.`);
+
+      $("questions").children[missing].scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+      return;
+    }
+
+    const score = answers.reduce((total, answer, i) => {
+      return total +
+        (answer === quiz.questions[i].correct ? 1 : 0);
+    }, 0);
+
+    const percentage = Math.round(
+      score / quiz.questions.length * 100
+    );
+
+    hide("playing");
+    show("result");
+
+    $("score").textContent =
+      `${score}/${quiz.questions.length}`;
+
+    $("resultTitle").textContent =
+      `Hasil ${player} untuk quiz ${quiz.owner}`;
+
+    if (percentage === 100) {
+      $("resultMessage").textContent =
+        "Wah, kamu kenal banget! Bestie sejati nih! 🥹";
+    } else if (percentage >= 70) {
+      $("resultMessage").textContent =
+        "Kamu kenal dia dengan baik! Tinggal sedikit lagi! 💚";
+    } else if (percentage >= 40) {
+      $("resultMessage").textContent =
+        "Lumayan! Masih ada hal yang bisa kamu pelajari. 🌱";
+    } else {
+      $("resultMessage").textContent =
+        "Yuk, ngobrol lebih banyak dan kenali dia lebih dekat! 😊";
+    }
+
+    const review = $("review");
+    review.innerHTML = "<h2>🔎 Kunci Jawaban</h2>";
+
+    quiz.questions.forEach((q, i) => {
+      const row = document.createElement("div");
+      row.className = "question-card";
+
+      const correct = answers[i] === q.correct;
+
+      row.innerHTML = `
+        <strong>${i + 1}. ${escapeHtml(q.text)}</strong>
+        <p style="color:${correct ? '#16865b' : '#b34c58'}">
+          ${correct ? "✅ Benar" : "❌ Jawabanmu: " +
+            escapeHtml(q.options[answers[i]])}
+          <br>
+          Jawaban benar:
+          <b>${escapeHtml(q.options[q.correct])}</b>
+        </p>
+      `;
+
+      review.appendChild(row);
+    });
+
+    $("result").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+
+  $("addQuestion").addEventListener("click", () => {
+    if (quiz.questions.length >= 30) {
+      alert("Maksimal 30 pertanyaan.");
+      return;
+    }
+
+    quiz.questions.push(defaultQuestion(quiz.questions.length));
+    renderEditors();
+  });
+
+  $("makeLink").addEventListener("click", buildLink);
+
+  $("copyLink").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(latestLink);
+      alert("Link berhasil disalin!");
+    } catch (error) {
+      prompt("Salin link quiz berikut:", latestLink);
+    }
+  });
+
+  $("openQuiz").addEventListener("click", showIntro);
+  $("editQuiz").addEventListener("click", showCreator);
+  $("introEdit").addEventListener("click", showCreator);
+  $("resultEdit").addEventListener("click", showCreator);
+
+  $("startQuiz").addEventListener("click", startQuiz);
+  $("submitAnswers").addEventListener("click", submitAnswers);
+  $("again").addEventListener("click", showIntro);
+
+  $("createOwn").addEventListener("click", () => {
+    quiz = {
+      owner: "",
+      title: "Seberapa kenal kamu denganku?",
+      questions: quiz.questions.map(q => ({
+        category: q.category,
+        text: q.text,
+        options: [...q.options],
+        correct: q.correct
+      }))
+    };
+
+    showCreator();
+  });
+
+  // Membuka quiz berdasarkan data pada link.
+  try {
+    const match = location.hash.match(/(?:^#|&)quiz=([^&]+)/);
+
+    if (match) {
+      const decoded = decodeQuiz(match[1]);
+
+      if (!validQuiz(decoded)) {
+        throw new Error("Quiz tidak valid");
+      }
+
+      quiz = decoded;
+      showIntro();
+    } else {
+      quiz.questions = [
+        defaultQuestion(0),
+        defaultQuestion(3),
+        defaultQuestion(5)
+      ];
+
+      renderEditors();
+    }
+  } catch (error) {
+    quiz = {
+      owner: "",
+      title: "Seberapa kenal kamu denganku?",
+      questions: [
+        defaultQuestion(0),
+        defaultQuestion(3),
+        defaultQuestion(5)
+      ]
+    };
+
+    renderEditors();
+    alert("Link quiz tidak terbaca. Silakan buat quiz baru.");
+  }
+})();
+</script>
+
+</body>
+</html>
