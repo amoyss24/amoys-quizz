@@ -4,1035 +4,480 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#16865b">
-<title>Kenali Aku! — Quiz Sahabat</title>
-
+<meta name="theme-color" content="#6c5ce7">
+<title>PlayZone — Dunia Permainan Anak Remaja</title>
 <style>
 :root {
-  --green: #16865b;
-  --dark: #10533d;
-  --lime: #d8f36a;
-  --cream: #fff9e9;
-  --ink: #20352b;
-  --shadow: 0 12px 30px #174f3520;
+  --purple:#6c5ce7; --pink:#ff6b9a; --ink:#282542;
+  --muted:#77738d; --paper:#fbfaff; --line:#eae6f7;
+  --white:#fff; --shadow:0 10px 30px #30266a12;
 }
-
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
+button,input,select{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1100px,92%);margin:auto}
+header{position:sticky;top:0;z-index:10;background:#fbfaffed;
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{height:70px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.brand{font-size:1.3rem;font-weight:900;display:flex;align-items:center;gap:9px}
+.logo{background:linear-gradient(135deg,var(--purple),var(--pink));
+  color:white;border-radius:13px;padding:7px 10px}
+.navlinks{display:flex;gap:19px;color:var(--muted);font-size:.9rem;font-weight:700}
+.navlinks a:hover{color:var(--purple)}
+.menu{display:none;border:1px solid var(--line);background:white;border-radius:10px;padding:8px 12px}
+.hero{padding:65px 0 45px}
+.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center}
+.eyebrow{display:inline-block;background:#eeeaff;color:var(--purple);
+  padding:6px 12px;border-radius:99px;font-size:.78rem;font-weight:800}
+h1{font-size:clamp(2.6rem,6vw,4.5rem);line-height:1.05;letter-spacing:-2px;margin:18px 0}
+h1 span{color:var(--purple)}
+p{color:var(--muted)}
+.hero p{font-size:1.06rem;max-width:580px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn{border:0;border-radius:13px;padding:11px 16px;font-weight:800;
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  transition:transform .18s,background .18s}
+.btn:hover{transform:translateY(-2px)}
+.primary{background:var(--purple);color:white}
+.primary:hover{background:#5949d5}
+.soft{background:white;border:1px solid var(--line);color:var(--ink)}
+.art{min-height:280px;display:grid;place-items:center;position:relative}
+.orb{width:250px;aspect-ratio:1;border-radius:45% 55% 60% 40%;
+  display:grid;place-items:center;font-size:6rem;background:linear-gradient(135deg,#ded8ff,#ffc8dc);
+  box-shadow:inset 0 0 0 12px #ffffff55;animation:float 4s ease-in-out infinite}
+.chip{position:absolute;background:white;border:1px solid var(--line);
+  border-radius:14px;padding:10px 13px;font-weight:800;box-shadow:var(--shadow)}
+.chip.one{top:15px;left:0}.chip.two{bottom:20px;right:0}
+@keyframes float{50%{transform:translateY(-10px) rotate(3deg)}}
+section{padding:38px 0}
+.section-head{margin-bottom:20px}
+h2{font-size:clamp(1.7rem,3vw,2.3rem);letter-spacing:-1px;margin:10px 0 4px}
+.section-head p{margin:0}
+.tools{display:flex;gap:10px;margin:20px 0;flex-wrap:wrap}
+.field{width:100%;padding:11px 13px;border:1px solid #e2def1;border-radius:12px;
+  background:white;color:var(--ink);outline:none}
+.field:focus{border-color:var(--purple);box-shadow:0 0 0 3px #6c5ce71b}
+.search{flex:1;min-width:200px}.filter{min-width:180px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.card{background:white;border:1px solid var(--line);border-radius:20px;padding:20px;
+  box-shadow:var(--shadow);display:flex;flex-direction:column;transition:.2s}
+.card:hover{transform:translateY(-4px);border-color:#cfc6ff}
+.gameicon{width:55px;height:55px;border-radius:17px;display:grid;place-items:center;
+  font-size:1.8rem;margin-bottom:12px}
+.tag{display:inline-block;background:#f0edff;color:#6556cf;padding:4px 9px;
+  border-radius:99px;font-size:.75rem;font-weight:800;align-self:flex-start}
+.card h3{margin:10px 0 2px}.card p{font-size:.9rem;flex:1;margin:5px 0 16px}
+.card .btn{width:100%}
+.empty{grid-column:1/-1;background:white;border:1px dashed #d5ceed;
+  border-radius:18px;text-align:center;padding:30px;color:var(--muted)}
+.panel{background:white;border:1px solid var(--line);border-radius:22px;
+  padding:clamp(17px,3vw,28px);box-shadow:var(--shadow);margin-top:22px}
+.paneltop{display:flex;justify-content:space-between;align-items:flex-start;gap:15px}
+.panel h2{margin-top:10px}
+.small{font-size:.88rem;color:var(--muted)}
+.gamearea{margin-top:18px}
+.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}
+.option{background:#faf9ff;border:1px solid #e7e2fa;border-radius:13px;
+  padding:12px;text-align:left;font-weight:700;color:var(--ink)}
+.option:hover{border-color:var(--purple);background:#f1eeff}
+.option:disabled{cursor:default}
+.correct{background:#e4fff2!important;border-color:#43be8c!important}
+.wrong{background:#fff0f4!important;border-color:#f17b9d!important}
+.progress{height:8px;background:#eeeaf8;border-radius:99px;overflow:hidden;margin:12px 0 20px}
+.progress span{height:100%;display:block;background:linear-gradient(90deg,var(--purple),var(--pink))}
+.result{background:linear-gradient(135deg,#f0edff,#fff0f6);padding:20px;border-radius:17px;margin:15px 0}
+.score{font-size:2.4rem;line-height:1.2;font-weight:950;color:var(--purple)}
+.feedback{background:#f4f1ff;border-radius:12px;padding:12px;margin:10px 0}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.box{background:white;border:1px solid var(--line);border-radius:18px;padding:20px}
+.box h3{margin-top:0}
+.aboutgrid{display:grid;grid-template-columns:1fr 1fr;gap:17px}
+.safe{background:#f0fff8;border:1px solid #c8f5e2;padding:12px;border-radius:12px;color:#24684e}
+footer{margin-top:35px;background:#282342;color:white;padding:30px 0}
+footer p{color:#d3d0e4;margin:5px 0}
+footer .foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+footer nav{display:flex;gap:15px;flex-wrap:wrap}
+.hidden{display:none!important}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  z-index:30;background:#282342;color:white;padding:12px 18px;border-radius:12px;
+  max-width:90%;text-align:center;box-shadow:var(--shadow)}
+@media(max-width:800px){
+ .hero-grid{grid-template-columns:1fr}.art{min-height:240px}.orb{width:220px}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .navlinks{display:none;position:absolute;top:65px;left:4%;right:4%;background:white;
+   padding:12px;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
+   flex-direction:column;gap:0}
+ .navlinks.open{display:flex}.navlinks a{padding:9px}.menu{display:block}
+ .aboutgrid{grid-template-columns:1fr}
 }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  background:
-    radial-gradient(circle at 10% 5%, #e9f8c7, transparent 26%),
-    radial-gradient(circle at 90% 10%, #d8f3fa, transparent 25%),
-    var(--cream);
-  font-family: "Trebuchet MS", Arial, sans-serif;
-  color: var(--ink);
+@media(max-width:520px){
+ .grid{grid-template-columns:1fr}.options,.fields{grid-template-columns:1fr}
+ .hero{padding-top:40px}h1{letter-spacing:-1px}
+ .paneltop{flex-direction:column}
 }
-
-button, input, select {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-  border: 0;
-  border-radius: 14px;
-  padding: 12px 17px;
-  font-weight: bold;
-  transition: .15s;
-}
-
-button:hover {
-  transform: translateY(-2px);
-}
-
-button:focus-visible,
-input:focus-visible,
-select:focus-visible {
-  outline: 3px solid orange;
-}
-
-.topbar {
-  background: var(--green);
-  color: white;
-  padding: 15px 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 4px 0 #0d6946;
-}
-
-.brand {
-  font-size: 1.3rem;
-  font-weight: 1000;
-}
-
-.brand span {
-  color: var(--lime);
-}
-
-main {
-  width: min(900px, 92%);
-  margin: 28px auto 60px;
-}
-
-.hero {
-  text-align: center;
-  padding: 18px 10px 26px;
-}
-
-.mascot {
-  font-size: 3.3rem;
-}
-
-.hero h1 {
-  font-size: clamp(2rem, 6vw, 3.4rem);
-  margin: 8px 0;
-  color: var(--dark);
-}
-
-.hero p {
-  max-width: 650px;
-  margin: auto;
-  color: #557064;
-  line-height: 1.6;
-}
-
-.chips {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 16px;
-}
-
-.chip {
-  background: white;
-  border: 2px solid #dce9ce;
-  border-radius: 999px;
-  padding: 7px 12px;
-  font-size: .83rem;
-  font-weight: bold;
-}
-
-.panel {
-  background: white;
-  border: 2px solid #e5eddc;
-  border-radius: 24px;
-  padding: clamp(18px, 4vw, 30px);
-  box-shadow: var(--shadow);
-  margin: 18px 0;
-}
-
-.panel h2 {
-  margin-top: 0;
-  color: var(--dark);
-}
-
-.sub {
-  color: #718278;
-  line-height: 1.5;
-  margin-bottom: 22px;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  margin: 13px 0;
-}
-
-.field label {
-  font-size: .92rem;
-  font-weight: bold;
-}
-
-.field input,
-.field select {
-  width: 100%;
-  border: 2px solid #dce7dc;
-  border-radius: 12px;
-  padding: 12px;
-  background: #fcfdf9;
-  color: var(--ink);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 16px;
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 20px;
-}
-
-.btn-primary {
-  background: var(--green);
-  color: white;
-}
-
-.btn-secondary {
-  background: var(--lime);
-  color: #27452d;
-}
-
-.btn-quiet {
-  background: #eef5e8;
-  color: #355642;
-}
-
-.btn-danger {
-  background: #ffe2e4;
-  color: #963d4a;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.question-editor {
-  border: 2px dashed #dce8d5;
-  border-radius: 17px;
-  padding: 15px;
-  margin: 13px 0;
-  background: #fbfdf8;
-}
-
-.question-editor h3 {
-  margin-top: 0;
-}
-
-.option-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.hint {
-  font-size: .82rem;
-  color: #75847a;
-  line-height: 1.5;
-}
-
-.question-card {
-  padding: 18px;
-  border: 2px solid #e5eddf;
-  border-radius: 18px;
-  margin: 14px 0;
-}
-
-.question-card h3 {
-  margin-top: 0;
-}
-
-.answers {
-  display: grid;
-  gap: 9px;
-}
-
-.answer {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border: 2px solid #e4eadf;
-  border-radius: 13px;
-  padding: 12px;
-  cursor: pointer;
-}
-
-.answer:has(input:checked) {
-  border-color: var(--green);
-  background: #eef9ee;
-}
-
-.answer input {
-  accent-color: var(--green);
-  width: 18px;
-  height: 18px;
-}
-
-.progress-wrap {
-  height: 9px;
-  border-radius: 99px;
-  background: #e7efdf;
-  overflow: hidden;
-  margin: 12px 0 20px;
-}
-
-.progress {
-  height: 100%;
-  background: var(--green);
-  width: 0;
-  transition: width .2s;
-}
-
-.score {
-  font-size: clamp(3rem, 12vw, 5.8rem);
-  font-weight: 1000;
-  color: var(--green);
-  margin: 12px 0;
-}
-
-.sharebox {
-  background: #f3f8ec;
-  border: 2px solid #dfebd6;
-  padding: 13px;
-  border-radius: 14px;
-  overflow-wrap: anywhere;
-}
-
-.footer {
-  text-align: center;
-  color: #829086;
-  font-size: .8rem;
-  padding: 15px;
-}
-
-@media(max-width: 600px) {
-  .grid, .option-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .actions button {
-    width: 100%;
-  }
-
-  .panel {
-    border-radius: 19px;
-  }
-}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
-
 <body>
-
-<header class="topbar">
-  <div class="brand">🌿 Kenali<span>Aku!</span></div>
-  <div>Quiz seru bareng sahabat ✨</div>
+<header>
+ <div class="wrap nav">
+  <a class="brand" href="#beranda"><span class="logo">🎮</span> PlayZone</a>
+  <nav class="navlinks" id="navlinks">
+   <a href="#beranda">Beranda</a><a href="#permainan">Semua Permainan</a>
+   <a href="#permainan" data-jump="personality">Kuis Kepribadian</a>
+   <a href="#permainan" data-jump="logic">Tantangan Otak</a>
+   <a href="#permainan" data-jump="friend">Main Bareng</a><a href="#tentang">Tentang</a>
+  </nav>
+  <button class="menu" id="menubtn" aria-label="Buka menu" aria-expanded="false">☰</button>
+ </div>
 </header>
 
 <main>
-
-<section class="hero">
-  <div class="mascot">🌴 🐥 🐯 🌴</div>
-  <h1>Seberapa Kenal Kamu<br>Dengan Aku?</h1>
-  <p>
-    Buat quiz tentang kepribadianmu, bagikan kepada teman,
-    lalu lihat siapa yang paling mengenal dirimu!
-  </p>
-  <div class="chips">
-    <span class="chip">🍜 Makanan</span>
-    <span class="chip">🎬 Film</span>
-    <span class="chip">📺 Kartun</span>
-    <span class="chip">🎨 Hobi</span>
-    <span class="chip">💚 Kepribadian</span>
+<section class="hero" id="beranda">
+ <div class="wrap hero-grid">
+  <div>
+   <span class="eyebrow">✨ TEMPAT SERU BUAT REHAT SEJENAK</span>
+   <h1>Waktunya main,<br><span>waktunya seru!</span></h1>
+   <p>Uji kepribadian, pecahkan teka-teki, tebak kata, dan kenali temanmu lewat permainan ringan yang bisa dimainkan langsung di browser.</p>
+   <div class="actions"><a class="btn primary" href="#permainan">Jelajahi Permainan →</a><button class="btn soft" id="randomgame">🎲 Pilihkan Game</button></div>
   </div>
+  <div class="art"><div class="orb">🎮</div><div class="chip one">🧠 Asah otak!</div><div class="chip two">💖 Kenali diri</div></div>
+ </div>
 </section>
 
-<section id="creator" class="panel">
-  <h2>🎨 Buat Quiz Kamu</h2>
-  <p class="sub">
-    Masukkan namamu, atur pertanyaan, dan tentukan jawaban yang benar.
-  </p>
-
-  <div class="grid">
-    <div class="field">
-      <label for="ownerName">Nama pembuat quiz</label>
-      <input id="ownerName" maxlength="50"
-             placeholder="Contoh: Mei Mei">
-    </div>
-
-    <div class="field">
-      <label for="quizTitle">Judul quiz</label>
-      <input id="quizTitle" maxlength="80"
-             value="Seberapa kenal kamu denganku?">
-    </div>
+<section id="permainan">
+ <div class="wrap">
+  <div class="section-head"><span class="eyebrow">PILIH PETUALANGANMU</span><h2>Permainan buat kamu</h2><p>Cari game sesuai suasana hati dan mulai main kapan saja.</p></div>
+  <div class="tools">
+   <input class="field search" id="search" type="search" placeholder="🔎 Cari permainan..." aria-label="Cari permainan">
+   <select class="field filter" id="filter" aria-label="Filter kategori">
+    <option value="all">Semua kategori</option><option value="personality">Kuis Kepribadian</option>
+    <option value="brain">Tantangan Otak</option><option value="friends">Main Bareng</option>
+    <option value="fun">Santai & Lucu</option>
+   </select>
   </div>
-
-  <div id="editors"></div>
-
-  <div class="actions">
-    <button id="addQuestion" class="btn-quiet">
-      ＋ Tambah Pertanyaan
-    </button>
-    <button id="makeLink" class="btn-primary">
-      Buat Link Quiz ↗
-    </button>
-  </div>
-
-  <p class="hint">
-    Setiap pertanyaan memiliki empat pilihan jawaban.
-    Pilih satu jawaban yang benar. Maksimal 30 pertanyaan.
-  </p>
+  <div class="grid" id="gamegrid"></div>
+  <div class="panel hidden" id="panel" aria-live="polite"></div>
+ </div>
 </section>
 
-<section id="sharePanel" class="panel hidden">
-  <h2>🔗 Quiz Siap Dibagikan!</h2>
-  <p class="sub">
-    Salin link berikut dan kirim kepada temanmu.
-  </p>
-
-  <div id="shareUrl" class="sharebox"></div>
-
-  <div class="actions">
-    <button id="copyLink" class="btn-primary">Salin Link</button>
-    <button id="openQuiz" class="btn-secondary">Coba Quiz</button>
-    <button id="editQuiz" class="btn-quiet">Edit Quiz</button>
+<section id="tentang">
+ <div class="wrap">
+  <div class="section-head"><span class="eyebrow">SEDIKIT TENTANG KAMI</span><h2>Seru boleh, tetap aman ✨</h2><p>PlayZone dibuat untuk hiburan ringan, belajar hal baru, dan mempererat pertemanan.</p></div>
+  <div class="aboutgrid">
+   <div class="box"><h3>🌈 Main sesuai gayamu</h3><p>Pilih permainan singkat untuk mengisi waktu luang, menguji pengetahuan, atau mengenal kebiasaanmu. Tidak ada jawaban kepribadian yang benar atau salah.</p></div>
+   <div class="box"><h3>🛡️ Privasi tetap penting</h3><p>Skor terbaik disimpan di browser perangkatmu. Jangan masukkan informasi pribadi sensitif. Link kuis pertemanan memuat data kuis di dalam URL, jadi bagikan hanya kepada orang yang kamu percaya.</p></div>
   </div>
+ </div>
 </section>
-
-<section id="intro" class="panel hidden">
-  <h2 id="introTitle">Quiz Sahabat</h2>
-  <p id="introDesc" class="sub"></p>
-
-  <div class="field">
-    <label for="playerName">Masukkan namamu sebelum mulai</label>
-    <input id="playerName" maxlength="50"
-           placeholder="Siapa namamu?">
-  </div>
-
-  <div class="actions">
-    <button id="startQuiz" class="btn-primary">
-      Mulai Menjawab ✨
-    </button>
-    <button id="introEdit" class="btn-quiet">
-      Buat/Edit Quiz
-    </button>
-  </div>
-</section>
-
-<section id="playing" class="panel hidden">
-  <div id="playerGreeting"></div>
-
-  <div class="progress-wrap">
-    <div id="progress" class="progress"></div>
-  </div>
-
-  <div id="questions"></div>
-
-  <div class="actions">
-    <button id="submitAnswers" class="btn-primary">
-      Lihat Skor 🎉
-    </button>
-  </div>
-</section>
-
-<section id="result" class="panel hidden">
-  <div style="font-size:3rem">🎉 🥳 🌟</div>
-  <h2 id="resultTitle">Hasil Quiz</h2>
-  <div id="score" class="score">0/0</div>
-  <p id="resultMessage" class="sub"></p>
-
-  <div id="review"></div>
-
-  <div class="actions">
-    <button id="again" class="btn-primary">Coba Lagi</button>
-    <button id="createOwn" class="btn-secondary">
-      Buat Quiz Tentang Aku ↗
-    </button>
-    <button id="resultEdit" class="btn-quiet">Edit Quiz Ini</button>
-  </div>
-</section>
-
-<div class="footer">
-  Dibuat untuk seru-seruan bersama teman 💚
-</div>
-
 </main>
 
+<footer><div class="wrap foot">
+ <div><a class="brand" href="#beranda"><span class="logo">🎮</span> PlayZone</a><p>Dunia permainan ringan untuk remaja.</p><p class="small">© <span id="year"></span> PlayZone · Main dengan bijak, ya!</p></div>
+ <nav><a href="#beranda">Beranda</a><a href="#permainan">Permainan</a><a href="#tentang">Tentang</a></nav>
+</div></footer>
+<div class="toast hidden" id="toast" role="status"></div>
+
 <script>
-(() => {
-  const $ = id => document.getElementById(id);
+"use strict";
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const panel=$("#panel"),toastEl=$("#toast");
+let currentGame=null,timerId=null,toastId=null;
+$("#year").textContent=new Date().getFullYear();
 
-  const categories = [
-    {
-      name: "🍜 Makanan favorit",
-      question: "Apa makanan favoritku?",
-      options: ["Mie ayam", "Bakso", "Nasi goreng", "Seblak"]
-    },
-    {
-      name: "🥤 Minuman favorit",
-      question: "Apa minuman yang paling kusuka?",
-      options: ["Es teh", "Matcha", "Jus buah", "Kopi"]
-    },
-    {
-      name: "🎬 Genre film",
-      question: "Genre film apa yang paling kusuka?",
-      options: ["Komedi", "Horor", "Romantis", "Petualangan"]
-    },
-    {
-      name: "📺 Kartun favorit",
-      question: "Kartun apa yang paling kusuka?",
-      options: ["Upin & Ipin", "SpongeBob", "Doraemon", "Tom and Jerry"]
-    },
-    {
-      name: "🎵 Musik",
-      question: "Musik apa yang sering kudengarkan?",
-      options: ["Pop", "K-Pop", "Dangdut", "Indie/lo-fi"]
-    },
-    {
-      name: "🎨 Hobi",
-      question: "Kegiatan apa yang paling kusuka?",
-      options: ["Nonton film", "Membaca", "Main game", "Jalan-jalan"]
-    },
-    {
-      name: "🌈 Warna favorit",
-      question: "Apa warna favoritku?",
-      options: ["Hijau", "Biru", "Hitam", "Pink"]
-    },
-    {
-      name: "🐾 Hewan favorit",
-      question: "Apa hewan favoritku?",
-      options: ["Kucing", "Kelinci", "Harimau", "Burung"]
-    },
-    {
-      name: "🏖️ Tempat liburan",
-      question: "Aku lebih suka liburan ke mana?",
-      options: ["Pantai", "Gunung", "Kota", "Di rumah"]
-    },
-    {
-      name: "💬 Kepribadian",
-      question: "Kalau ada masalah, biasanya aku...",
-      options: [
-        "Cerita ke teman",
-        "Menyendiri dulu",
-        "Mencari solusi",
-        "Mengalihkan perhatian"
-      ]
-    },
-    {
-      name: "🌙 Waktu favorit",
-      question: "Aku lebih aktif pada waktu...",
-      options: ["Pagi", "Siang", "Sore", "Malam"]
-    },
-    {
-      name: "🎁 Hal yang kusuka",
-      question: "Hal kecil apa yang membuatku senang?",
-      options: [
-        "Dikasih makanan",
-        "Dipuji",
-        "Ditemani",
-        "Dapat hadiah"
-      ]
-    }
-  ];
+const games=[
+ {id:"personality",title:"Kuis Kepribadian",icon:"💖",cat:"personality",tag:"Kenali diri",color:"#ffe5ef",desc:"Cari tahu gaya belajar dan tipe pertemananmu."},
+ {id:"friend",title:"Seberapa Kenal Kamu?",icon:"🫶",cat:"friends",tag:"Main bareng",color:"#e4e0ff",desc:"Buat kuis tentang dirimu dan bagikan kepada teman."},
+ {id:"word",title:"Tebak Kata",icon:"🔤",cat:"brain",tag:"Tantangan otak",color:"#dff9ef",desc:"Tebak kata dari petunjuk dengan kesempatan terbatas."},
+ {id:"logic",title:"Teka-Teki Logika",icon:"🧩",cat:"brain",tag:"Asah logika",color:"#fff0cf",desc:"Uji ketelitian lewat soal logika singkat."},
+ {id:"general",title:"Kuis Pengetahuan Umum",icon:"🌍",cat:"brain",tag:"Kuis cepat",color:"#dff2ff",desc:"Jawab pertanyaan sains, sejarah, teknologi, dan olahraga."},
+ {id:"choose",title:"Pilih Salah Satu",icon:"⚖️",cat:"fun",tag:"Santai",color:"#ffe7d9",desc:"Pilih dilema unik dan lihat ringkasan pilihanmu."},
+ {id:"truth",title:"Truth or Dare Digital",icon:"🎭",cat:"friends",tag:"Bareng teman",color:"#f2e4ff",desc:"Ambil pertanyaan jujur atau tantangan yang aman."}
+];
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function toast(msg){toastEl.textContent=msg;toastEl.classList.remove("hidden");clearTimeout(toastId);toastId=setTimeout(()=>toastEl.classList.add("hidden"),2600)}
+function renderCards(){
+ const q=$("#search").value.trim().toLowerCase(),cat=$("#filter").value;
+ const list=games.filter(g=>(cat==="all"||g.cat===cat)&&(g.title+" "+g.desc+" "+g.tag).toLowerCase().includes(q));
+ $("#gamegrid").innerHTML=list.length?list.map(g=>`<article class="card">
+ <div class="gameicon" style="background:${g.color}">${g.icon}</div><span class="tag">${g.tag}</span>
+ <h3>${g.title}</h3><p>${g.desc}</p><button class="btn primary" data-game="${g.id}">Main sekarang →</button></article>`).join("")
+ :`<div class="empty"><div style="font-size:2rem">🔎</div><strong>Permainan belum ditemukan</strong><p>Coba kata kunci atau kategori lain.</p><button class="btn soft" id="resetsearch">Reset pencarian</button></div>`;
+}
+$("#search").addEventListener("input",renderCards);
+$("#filter").addEventListener("change",renderCards);
+$("#gamegrid").addEventListener("click",e=>{
+ const b=e.target.closest("[data-game]");
+ if(b)startGame(b.dataset.game);
+ if(e.target.id==="resetsearch"){$("#search").value="";$("#filter").value="all";renderCards()}
+});
+$("#menubtn").onclick=()=>{
+ const open=$("#navlinks").classList.toggle("open");
+ $("#menubtn").setAttribute("aria-expanded",String(open));
+ $("#menubtn").textContent=open?"✕":"☰";
+};
+$("#navlinks").addEventListener("click",e=>{
+ const a=e.target.closest("a");if(!a)return;
+ $("#navlinks").classList.remove("open");$("#menubtn").textContent="☰";
+ $("#menubtn").setAttribute("aria-expanded","false");
+ if(a.dataset.jump)startGame(a.dataset.jump);
+});
+$("#randomgame").onclick=()=>startGame(games[Math.floor(Math.random()*games.length)].id);
+function openPanel(id,title,desc=""){
+ clearInterval(timerId);currentGame=id;panel.classList.remove("hidden");
+ panel.innerHTML=`<div class="paneltop"><div><span class="eyebrow">🎮 SEKARANG BERMAIN</span><h2>${title}</h2><div class="small">${desc}</div></div><button class="btn soft" id="closegame">✕ Tutup</button></div><div class="gamearea" id="gamearea"></div>`;
+ $("#closegame").onclick=()=>{clearInterval(timerId);panel.classList.add("hidden");currentGame=null;$("#permainan").scrollIntoView({behavior:"smooth"})};
+ panel.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function area(){return $("#gamearea")}
+function nameField(label="Nama pemain"){return `<label class="small"> ${label}<input class="field playername" maxlength="40" placeholder="Masukkan nama kamu" autocomplete="given-name"></label>`}
+function getName(){const n=$(".playername")?.value.trim().slice(0,40);if(!n){toast("Isi nama terlebih dahulu, ya.");return null}return n}
+function best(key,score){try{const old=Number(localStorage.getItem("pz-best-"+key)||0);if(score>old)localStorage.setItem("pz-best-"+key,String(score));return Math.max(old,score)}catch(e){return score}}
+function share(text){
+ if(navigator.share){navigator.share({title:"Hasil PlayZone",text}).catch(()=>{});return}
+ if(navigator.clipboard?.writeText){navigator.clipboard.writeText(text).then(()=>toast("Teks berhasil disalin!")).catch(()=>copyFallback(text))}
+ else copyFallback(text);
+}
+function copyFallback(text){const el=document.createElement("textarea");el.value=text;document.body.appendChild(el);el.select();try{document.execCommand("copy");toast("Teks berhasil disalin!")}catch(e){toast("Silakan salin teks secara manual: "+text)}el.remove()}
+function startGame(id){
+ if(id==="personality")personalityIntro();
+ else if(id==="friend")friendHome();
+ else if(id==="word")wordIntro();
+ else if(id==="logic"||id==="general")quizIntro(id);
+ else if(id==="choose")chooseIntro();
+ else if(id==="truth")truthIntro();
+}
 
-  let quiz = {
-    owner: "",
-    title: "Seberapa kenal kamu denganku?",
-    questions: []
-  };
+/* A. KUIS KEPRIBADIAN */
+const pQuestions=[
+ {q:"Kalau mendapat tugas baru, kamu biasanya…",a:["Langsung mencoba","Membuat rencana dulu","Diskusi dengan teman","Mencari inspirasi"]},
+ {q:"Cara belajar yang paling nyaman buatmu?",a:["Praktik langsung","Catatan yang rapi","Belajar kelompok","Video atau gambar"]},
+ {q:"Saat teman punya masalah, kamu…",a:["Mengajak mencari solusi","Membantu menyusun langkah","Mendengarkan ceritanya","Mencairkan suasana"]},
+ {q:"Akhir pekan ideal adalah…",a:["Mencoba aktivitas baru","Menyelesaikan hal tertunda","Berkumpul dengan teman","Menikmati hobi kreatif"]},
+ {q:"Dalam kelompok, kamu cenderung…",a:["Menggerakkan tim","Mengatur detail","Menjaga kekompakan","Menyumbang ide unik"]}
+];
+const pTypes=[
+ ["Si Penggerak 🚀","Kamu suka mencoba hal baru dan belajar dari pengalaman.","Coba sisihkan waktu untuk merencanakan langkah sebelum bertindak."],
+ ["Si Perencana 📒","Kamu nyaman saat tujuan dan langkahnya jelas. Ketelitianmu membantu kelompok tetap terarah.","Jangan takut mencoba meski semua detail belum sempurna."],
+ ["Si Sahabat 🤝","Kamu menghargai hubungan dan bisa menjadi pendengar yang membuat orang lain nyaman.","Ingat juga untuk menyampaikan kebutuhan dan pendapatmu."],
+ ["Si Kreatif 🎨","Kamu suka melihat kemungkinan baru dan mengekspresikan ide dengan cara unik.","Ubah ide menarikmu menjadi langkah kecil yang bisa dilakukan."]
+];
+function personalityIntro(){
+ openPanel("personality","Kuis Kepribadian","Jawab sesuai dirimu. Tidak ada tipe yang lebih baik dari yang lain.");
+ area().innerHTML=`${nameField()}<p class="small">Jawab 5 pertanyaan singkat untuk melihat kecenderunganmu.</p><button class="btn primary" id="pstart">Mulai kuis →</button>`;
+ $("#pstart").onclick=()=>{const n=getName();if(n)runP(n,0,[0,0,0,0])};
+}
+function runP(name,i,scores){
+ if(i===pQuestions.length){
+  const type=pTypes[scores.indexOf(Math.max(...scores))],text=`${name} mendapat hasil ${type[0]} di PlayZone. ${type[1]}`;
+  area().innerHTML=`<div class="result"><div class="score">${type[0]}</div><h3>Hai, ${esc(name)}!</h3><p>${type[1]}</p><p><b>Tips kecil:</b> ${type[2]}</p><p class="small">Hasil ini untuk hiburan, bukan penilaian psikologis.</p></div><button class="btn primary" id="pretry">🔁 Ulangi</button> <button class="btn soft" id="pshare">↗ Bagikan hasil</button>`;
+  best("personality",Math.max(...scores));$("#pretry").onclick=personalityIntro;$("#pshare").onclick=()=>share(text);return;
+ }
+ const q=pQuestions[i];
+ area().innerHTML=`<div class="small">Pertanyaan ${i+1} dari ${pQuestions.length}</div><div class="progress"><span style="width:${i/pQuestions.length*100}%"></span></div><h3>${q.q}</h3><div class="options">${q.a.map((a,j)=>`<button class="option" data-p="${j}">${a}</button>`).join("")}</div>`;
+ $$("[data-p]").forEach(b=>b.onclick=()=>{const s=[...scores];s[Number(b.dataset.p)]++;runP(name,i+1,s)});
+}
 
-  let player = "";
-  let answers = [];
-  let latestLink = "";
+/* B. TEBAK KATA */
+const wordBank=[
+ ["KELINCI","Hewan","Hewan bertelinga panjang yang suka melompat."],
+ ["PIZZA","Makanan","Makanan bundar dengan topping yang dipanggang."],
+ ["PAYUNG","Benda","Dipakai saat hujan atau terik matahari."],
+ ["ROBOT","Teknologi","Mesin yang dapat diprogram untuk melakukan tugas."],
+ ["POHON","Alam","Memiliki batang, akar, dan daun."],
+ ["POPCORN","Makanan","Camilan yang sering menemani nonton film."],
+ ["GAJAH","Hewan","Hewan besar dengan belalai."],
+ ["KAMERA","Benda","Alat untuk mengambil foto atau video."],
+ ["BIOSKOP","Film","Tempat menonton film di layar besar."],
+ ["SEPEDA","Benda","Kendaraan yang dikayuh dan biasanya punya dua roda."]
+];
+let ws;
+function wordIntro(){
+ openPanel("word","Tebak Kata","Tebak kata dari petunjuk dengan tiga kesempatan per kata.");
+ area().innerHTML=`${nameField()}<label class="small">Kategori<select class="field" id="wordcat"><option value="all">Semua kategori</option>${[...new Set(wordBank.map(w=>w[1]))].map(c=>`<option>${c}</option>`).join("")}</select></label><p class="small">Setiap jawaban benar bernilai 10 poin.</p><button class="btn primary" id="wordstart">Mulai →</button>`;
+ $("#wordstart").onclick=()=>{const n=getName();if(!n)return;const c=$("#wordcat").value;ws={name:n,words:wordBank.filter(w=>c==="all"||w[1]===c).sort(()=>Math.random()-.5),i:0,score:0,tries:3};showWord()};
+}
+function showWord(msg=""){
+ if(ws.i>=ws.words.length){
+  const text=`${ws.name} mendapat ${ws.score} poin di Tebak Kata PlayZone.`;
+  area().innerHTML=`<div class="result"><div class="score">${ws.score} poin</div><h3>Selesai, ${esc(ws.name)}!</h3></div><button class="btn primary" id="wagain">Main lagi</button> <button class="btn soft" id="wshare">Bagikan skor</button>`;
+  best("word",ws.score);$("#wagain").onclick=wordIntro;$("#wshare").onclick=()=>share(text);return;
+ }
+ const w=ws.words[ws.i];
+ area().innerHTML=`<div class="paneltop"><span class="tag">${w[1]}</span><b>⭐ ${ws.score} poin</b></div><div class="small">Kata ${ws.i+1} dari ${ws.words.length}</div><div class="progress"><span style="width:${ws.i/ws.words.length*100}%"></span></div><div class="result"><h3>Petunjuk 💡</h3><p>${w[2]}</p><p>Kesempatan: ${"❤️ ".repeat(ws.tries)}</p></div><form id="wordform"><input class="field" id="guess" maxlength="25" placeholder="Ketik tebakanmu..." required autocomplete="off"><div class="actions"><button class="btn primary">Tebak!</button><button type="button" class="btn soft" id="skipword">Lewati</button></div></form>${msg?`<div class="feedback">${msg}</div>`:""}`;
+ $("#wordform").onsubmit=e=>{e.preventDefault();const guess=$("#guess").value.trim().toUpperCase();if(guess===w[0]){ws.score+=10;ws.i++;ws.tries=3;showWord("🎉 Benar! +10 poin.");return}ws.tries--;if(ws.tries<=0){area().innerHTML=`<div class="feedback">Belum tepat. Jawabannya adalah <b>${w[0]}</b>.</div><button class="btn primary" id="nextword">Lanjut</button>`;$("#nextword").onclick=()=>{ws.i++;ws.tries=3;showWord()}}else showWord("Belum tepat, coba lagi!")};
+ $("#skipword").onclick=()=>{ws.i++;ws.tries=3;showWord(`Kata sebelumnya: ${w[0]}`)};
+}
 
-  function defaultQuestion(index = 0) {
-    const c = categories[index % categories.length];
+/* C. TEKA-TEKI LOGIKA DAN KUIS PENGETAHUAN UMUM */
+const banks={
+ logic:[
+  {q:"Semakin banyak diambil, semakin besar jadinya. Apakah itu?",a:["Lubang","Gunung","Tumpukan","Bayangan"],c:0,w:"Saat tanah diambil, lubang menjadi semakin besar."},
+  {q:"Ada 3 apel. Kamu mengambil 2 apel. Berapa apel yang kamu punya?",a:["1","2","3","5"],c:1,w:"Kamu mengambil 2 apel, jadi kamu memiliki 2 apel."},
+  {q:"Semua bloop adalah zarp. Semua zarp berwarna biru. Maka bloop…",a:["Pasti biru","Pasti merah","Tidak berwarna","Bukan zarp"],c:0,w:"Jika semua bloop termasuk zarp dan semua zarp biru, bloop juga biru."},
+  {q:"Angka berikutnya: 2, 4, 8, 16, …",a:["18","24","30","32"],c:3,w:"Setiap angka dikali dua."},
+  {q:"Mana yang berbeda?",a:["Segitiga","Persegi","Lingkaran","Kubus"],c:3,w:"Kubus adalah bangun ruang tiga dimensi."}
+ ],
+ general:[
+  {q:"Planet terbesar di tata surya adalah…",a:["Bumi","Jupiter","Mars","Venus"],c:1,w:"Jupiter adalah planet terbesar di tata surya."},
+  {q:"Proses tumbuhan membuat makanan dengan bantuan cahaya disebut…",a:["Evaporasi","Fotosintesis","Rotasi","Kondensasi"],c:1,w:"Fotosintesis menggunakan energi cahaya untuk membuat makanan."},
+  {q:"Indonesia memproklamasikan kemerdekaan pada tanggal…",a:["1 Juni 1945","17 Agustus 1945","10 November 1945","20 Mei 1908"],c:1,w:"Proklamasi dibacakan pada 17 Agustus 1945."},
+  {q:"Olahraga yang menggunakan raket dan kok adalah…",a:["Tenis meja","Bulu tangkis","Sepak bola","Bola voli"],c:1,w:"Bulu tangkis dimainkan dengan raket dan kok."},
+  {q:"Unit data digital yang bernilai 0 atau 1 disebut…",a:["Byte","Pixel","Bit","Hertz"],c:2,w:"Bit adalah unit data terkecil dengan nilai 0 atau 1."},
+  {q:"Benua dengan luas wilayah terbesar adalah…",a:["Afrika","Eropa","Asia","Australia"],c:2,w:"Asia merupakan benua terluas."},
+  {q:"Gas yang paling banyak terdapat di atmosfer bumi adalah…",a:["Oksigen","Nitrogen","Karbon dioksida","Hidrogen"],c:1,w:"Sekitar 78% atmosfer bumi terdiri dari nitrogen."}
+ ]
+};
+let qs;
+function quizIntro(kind){
+ const logic=kind==="logic";
+ openPanel(kind,logic?"Teka-Teki Logika":"Kuis Pengetahuan Umum",logic?"Pilih jawaban terbaik dan baca pembahasannya.":"Jawab soal lintas pengetahuan dengan timer 15 detik.");
+ area().innerHTML=`${nameField()}<p class="small">${logic?"5 soal logika.":"7 soal pengetahuan umum, 15 detik untuk setiap soal."}</p><button class="btn primary" id="quizstart">Mulai tantangan →</button>`;
+ $("#quizstart").onclick=()=>{const n=getName();if(!n)return;qs={kind,name:n,bank:[...banks[kind]].sort(()=>Math.random()-.5),i:0,score:0,answers:[]};showQuiz()};
+}
+function showQuiz(){
+ clearInterval(timerId);
+ if(qs.i>=qs.bank.length){finishQuiz();return}
+ const q=qs.bank[qs.i];let remaining=15;
+ area().innerHTML=`<div class="paneltop"><span class="small">Pertanyaan ${qs.i+1} dari ${qs.bank.length}</span><b>⭐ ${qs.score} poin ${qs.kind==="general"?'· ⏱️ <span id="timer">15</span>':''}</b></div><div class="progress"><span style="width:${qs.i/qs.bank.length*100}%"></span></div><h3>${q.q}</h3><div class="options">${q.a.map((a,i)=>`<button class="option" data-answer="${i}">${a}</button>`).join("")}</div><div id="quizfeedback"></div>`;
+ let locked=false;
+ function answer(i){
+  if(locked)return;locked=true;clearInterval(timerId);const ok=i===q.c;if(ok)qs.score+=10;
+  qs.answers.push({q:q.q,chosen:i<0?"Tidak menjawab":q.a[i],correct:q.a[q.c],ok,why:q.w});
+  $$("[data-answer]").forEach(b=>{b.disabled=true;if(Number(b.dataset.answer)===q.c)b.classList.add("correct");else if(Number(b.dataset.answer)===i)b.classList.add("wrong")});
+  $("#quizfeedback").innerHTML=`<div class="feedback">${i<0?"⏰ Waktu habis.":ok?"✅ Jawaban benar!":"❌ Belum tepat."} ${q.w}</div><button class="btn primary" id="nextquiz">${qs.i===qs.bank.length-1?"Lihat hasil":"Soal berikutnya →"}</button>`;
+  $("#nextquiz").onclick=()=>{qs.i++;showQuiz()};
+ }
+ $$("[data-answer]").forEach(b=>b.onclick=()=>answer(Number(b.dataset.answer)));
+ if(qs.kind==="general")timerId=setInterval(()=>{remaining--;if($("#timer"))$("#timer").textContent=remaining;if(remaining<=0)answer(-1)},1000);
+}
+function finishQuiz(){
+ clearInterval(timerId);const total=qs.bank.length*10,pct=Math.round(qs.score/total*100);
+ const title=qs.kind==="logic"?"Teka-Teki Logika":"Kuis Pengetahuan Umum";
+ const text=`${qs.name} mendapat ${qs.score}/${total} poin di ${title} PlayZone.`;
+ const record=best(qs.kind,qs.score);
+ area().innerHTML=`<div class="result"><div class="score">${qs.score}/${total}</div><h3>${pct>=80?"Keren banget! 🏆":pct>=50?"Usaha bagus! 🌟":"Terus berlatih! 💪"}</h3><p>${esc(qs.name)}, jawaban benar ${qs.answers.filter(a=>a.ok).length} dari ${qs.bank.length} soal.</p><p class="small">Skor terbaik di browser ini: ${record}</p></div><h3>Review jawaban</h3>${qs.answers.map((a,i)=>`<div class="feedback"><b>${i+1}. ${esc(a.q)}</b><br>Jawabanmu: ${esc(a.chosen)} ${a.ok?"✅":"❌"}<br>Jawaban benar: <b>${esc(a.correct)}</b><br><span class="small">${esc(a.why)}</span></div>`).join("")}<button class="btn primary" id="quizagain">🔁 Main lagi</button> <button class="btn soft" id="quizshare">↗ Bagikan hasil</button>`;
+ $("#quizagain").onclick=()=>quizIntro(qs.kind);$("#quizshare").onclick=()=>share(text);
+}
 
-    return {
-      category: c.name,
-      text: c.question,
-      options: [...c.options],
-      correct: 0
-    };
+/* D. PILIH SALAH SATU */
+const dilemmas=[
+ ["Pilih liburan…","🏖️ Pantai","⛰️ Gunung"],["Punya kemampuan…","🧠 Membaca pikiran","🔮 Melihat masa depan"],
+ ["Waktu luang…","🎮 Main game","📚 Baca buku"],["Mau punya…","🐱 Kucing yang bisa bicara","🤖 Robot asisten"],
+ ["Lebih suka…","🌅 Bangun pagi","🌙 Begadang sesekali"],["Petualangan…","🚀 Menjelajah luar angkasa","🌊 Menjelajah laut dalam"],
+ ["Kalau memilih…","🎨 Jago seni","🏅 Jago olahraga"],["Untuk sehari…","🦸 Jadi pahlawan super","🧙 Punya kekuatan sihir"]
+];
+function chooseIntro(){
+ openPanel("choose","Pilih Salah Satu","Pilih yang paling menarik buatmu. Tidak ada jawaban salah.");
+ area().innerHTML=`${nameField()}<p class="small">Pilih salah satu dari 5 dilema.</p><button class="btn primary" id="choosestart">Mulai memilih →</button>`;
+ $("#choosestart").onclick=()=>{const n=getName();if(n)runChoose(n,0,[],[...dilemmas].sort(()=>Math.random()-.5).slice(0,5))};
+}
+function runChoose(name,i,answers,list){
+ if(i===list.length){
+  const left=answers.filter(a=>a.side===0).length,right=answers.length-left;
+  const summary=left===right?"Pilihanmu seimbang antara kedua opsi.":left>right?"Kamu lebih sering memilih opsi pertama di ronde ini.":"Kamu lebih sering memilih opsi kedua di ronde ini.";
+  const text=`Hasil Pilih Salah Satu ${name}: ${answers.map(a=>a.choice).join(", ")}. ${summary}`;
+  area().innerHTML=`<div class="result"><div class="score">✨ Selesai!</div><h3>Terima kasih, ${esc(name)}!</h3><p>${summary}</p><p>${answers.map(a=>esc(a.title)+": <b>"+esc(a.choice)+"</b>").join("<br>")}</p><p class="small">Ini ringkasan pilihan, bukan tes kepribadian ilmiah.</p></div><button class="btn primary" id="chooseagain">Main lagi</button> <button class="btn soft" id="chooseshare">Bagikan hasil</button>`;
+  $("#chooseagain").onclick=chooseIntro;$("#chooseshare").onclick=()=>share(text);return;
+ }
+ const q=list[i];
+ area().innerHTML=`<div class="small">Pilihan ${i+1} dari ${list.length}</div><div class="progress"><span style="width:${i/list.length*100}%"></span></div><h3>${q[0]}</h3><div class="options"><button class="option" data-side="0">${q[1]}</button><button class="option" data-side="1">${q[2]}</button></div>`;
+ $$("[data-side]").forEach(b=>b.onclick=()=>runChoose(name,i+1,[...answers,{title:q[0],choice:b.textContent,side:Number(b.dataset.side)}],list));
+}
+
+/* E. TRUTH OR DARE */
+const truthData={
+ santai:{truth:["Hal kecil apa yang memperbaiki suasana hatimu?","Lagu apa yang akhir-akhir ini sering kamu putar?","Hobi apa yang ingin kamu coba?","Apa makanan favoritmu?","Apa hal sederhana yang kamu syukuri minggu ini?"],
+ dare:["Sebutkan tiga hal yang kamu suka dari dirimu.","Buat pose paling keren selama 5 detik.","Ceritakan fakta unik tentang hobimu.","Tirukan suara hewan selama 3 detik.","Rekomendasikan satu lagu untuk pemain lain."]},
+ lucu:{truth:["Apa kebiasaan kecilmu yang unik?","Kalau jadi karakter kartun sehari, siapa pilihanmu?","Emoji apa yang paling sering kamu pakai?","Apa kombinasi makanan unik yang kamu suka?","Apa momen lucu yang nyaman kamu ceritakan?"],
+ dare:["Buat iklan 10 detik untuk benda di dekatmu.","Ucapkan kalimat biasa seperti penyiar berita.","Buat ekspresi wajah paling dramatis.","Ciptakan nama superhero untuk dirimu.","Jelaskan mi instan seperti ilmuwan."]},
+ teman:{truth:["Sifat teman apa yang paling kamu hargai?","Kenangan menyenangkan apa yang ingin kamu ulang?","Apa cara terbaik untuk menyemangatimu?","Aktivitas apa yang ingin dilakukan bersama teman?","Apa arti menjadi teman yang baik?"],
+ dare:["Berikan pujian tulus kepada pemain lain.","Ajak pemain membuat salam kelompok.","Sebutkan satu hal positif hari ini.","Buat slogan persahabatan singkat.","Ucapkan semangat kepada pemain lain."]}
+};
+function truthIntro(){
+ openPanel("truth","Truth or Dare Digital","Pilih tantangan yang aman dan nyaman untuk semua pemain.");
+ area().innerHTML=`${nameField()}<label class="small">Kategori<select class="field" id="truthcat"><option value="santai">Santai</option><option value="lucu">Lucu</option><option value="teman">Persahabatan</option></select></label><p class="safe">🛡️ Setiap pemain boleh melewati tantangan kapan saja. Tidak ada tantangan berbahaya atau mempermalukan orang lain.</p><button class="btn primary" id="truthstart">Mulai</button>`;
+ $("#truthstart").onclick=()=>{const n=getName();if(n)runTruth(n,$("#truthcat").value)};
+}
+function runTruth(name,cat){
+ area().innerHTML=`<h3>Giliran ${esc(name)} 🎭</h3><p>Pilih satu:</p><div class="options"><button class="option" id="truthbtn">💬 Truth — Jujur</button><button class="option" id="darebtn">⚡ Dare — Tantangan</button></div><button class="btn soft" id="truthcatback">Ganti kategori</button>`;
+ function draw(type){
+  const list=truthData[cat][type],item=list[Math.floor(Math.random()*list.length)];
+  area().innerHTML=`<div class="result"><span class="tag">${type==="truth"?"TRUTH · JUJUR":"DARE · TANTANGAN"}</span><h3>${item}</h3><p class="small">Kamu boleh melewati atau mengganti tantangan jika tidak nyaman.</p></div><button class="btn primary" id="truthnext">Ambil lagi</button> <button class="btn soft" id="truthswitch">Ganti Truth/Dare</button> <button class="btn soft" id="truthexit">Selesai</button>`;
+  $("#truthnext").onclick=()=>runTruth(name,cat);$("#truthswitch").onclick=()=>runTruth(name,cat);$("#truthexit").onclick=truthIntro;
+ }
+ $("#truthbtn").onclick=()=>draw("truth");$("#darebtn").onclick=()=>draw("dare");$("#truthcatback").onclick=truthIntro;
+}
+
+/* F. KUIS PERTEMANAN: DATA KUIS DIBAWA DI DALAM LINK */
+function encodeData(data){return btoa(unescape(encodeURIComponent(JSON.stringify(data))))}
+function decodeData(str){return JSON.parse(decodeURIComponent(escape(atob(str))))}
+function friendHome(){
+ const hash=location.hash.startsWith("#friend=")?location.hash.slice(8):"";
+ if(hash){
+  try{const data=decodeData(hash);if(data.v===1&&Array.isArray(data.q)&&data.q.length>=1&&data.q.length<=10){friendTakeIntro(data);return}}
+  catch(e){toast("Link kuis tidak terbaca. Buat kuis baru, ya.")}
+ }
+ openPanel("friend","Seberapa Kenal Kamu dengan Aku?","Buat kuis tentang dirimu atau jawab kuis yang dibagikan teman.");
+ area().innerHTML=`<div class="aboutgrid"><div class="box"><h3>📝 Buat kuis sendiri</h3><p>Tulis pertanyaan dan kunci jawaban, lalu bagikan link kepada teman.</p><button class="btn primary" id="makefriend">Buat kuis</button></div><div class="box"><h3>🔗 Punya link teman?</h3><p>Tempel link kuis PlayZone untuk membukanya.</p><input class="field" id="friendlink" placeholder="https://.../#friend=..."><button class="btn soft" style="margin-top:10px" id="openfriend">Buka kuis</button></div></div><p class="small">Skor tidak dikirim otomatis ke pembuat kuis. Pemain bisa membagikan hasilnya kembali melalui pesan.</p>`;
+ $("#makefriend").onclick=friendBuilder;
+ $("#openfriend").onclick=()=>{try{const u=new URL($("#friendlink").value.trim(),location.href);if(!u.hash.startsWith("#friend="))throw Error();location.hash=u.hash.slice(1);friendHome()}catch(e){toast("Link tidak valid. Pastikan link berasal dari PlayZone.")}};
+}
+function friendBuilder(){
+ openPanel("friend","Buat Kuis Pertemanan","Buat 1–10 pertanyaan dengan empat pilihan jawaban.");
+ area().innerHTML=`<div class="fields"><label class="small">Namamu<input class="field" id="creator" maxlength="40" placeholder="Misalnya: Rani"></label><label class="small">Judul kuis<input class="field" id="friendtitle" maxlength="70" placeholder="Seberapa kenal aku?"></label></div><div id="fqcontainer"></div><div class="actions"><button class="btn soft" id="addfq">＋ Tambah pertanyaan</button><button class="btn primary" id="createfq">Buat link kuis →</button></div><p class="small">Jangan masukkan informasi pribadi sensitif. Kunci jawaban berada di dalam URL dan dapat diketahui oleh orang yang memahami formatnya.</p>`;
+ let count=0;
+ function addQuestion(){
+  if(count>=10){toast("Maksimal 10 pertanyaan.");return}
+  count++;const d=document.createElement("div");d.className="box";d.style.marginTop="12px";
+  d.innerHTML=`<h3>Pertanyaan ${count}</h3><label class="small">Pertanyaan<input class="field fq-question" maxlength="180" placeholder="Apa makanan favoritku?"></label><div class="fields" style="margin-top:10px">${[0,1,2,3].map(i=>`<label class="small">Pilihan ${"ABCD"[i]}<input class="field fq-option" data-opt="${i}" maxlength="100" placeholder="Jawaban ${"ABCD"[i]}"></label>`).join("")}</div><label class="small" style="display:block;margin-top:10px">Kunci jawaban<select class="field fq-correct"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select></label>`;
+  $("#fqcontainer").appendChild(d);
+ }
+ $("#addfq").onclick=addQuestion;addQuestion();
+ $("#createfq").onclick=()=>{
+  const creator=$("#creator").value.trim().slice(0,40),title=$("#friendtitle").value.trim().slice(0,70)||"Seberapa Kenal Aku?";
+  if(!creator){toast("Isi namamu terlebih dahulu.");return}
+  const blocks=$$("#fqcontainer .box"),questions=[];
+  for(const b of blocks){
+   const q=b.querySelector(".fq-question").value.trim();
+   const opts=[...b.querySelectorAll(".fq-option")].map(x=>x.value.trim());
+   const correct=Number(b.querySelector(".fq-correct").value);
+   if(!q||opts.length!==4||opts.some(x=>!x)){toast("Lengkapi semua pertanyaan dan pilihan jawaban.");return}
+   questions.push({q,a:opts,c:correct});
   }
-
-  function show(id) {
-    $(id).classList.remove("hidden");
-  }
-
-  function hide(id) {
-    $(id).classList.add("hidden");
-  }
-
-  function escapeHtml(value) {
-    return String(value).replace(/[&<>"']/g, char => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;"
-    })[char]);
-  }
-
-  function encodeQuiz(data) {
-    const bytes = new TextEncoder().encode(JSON.stringify(data));
-    let binary = "";
-
-    bytes.forEach(byte => {
-      binary += String.fromCharCode(byte);
-    });
-
-    return btoa(binary)
-      .replace(/\+/g, "-")
-      .replace(/\//g, "_")
-      .replace(/=+$/g, "");
-  }
-
-  function decodeQuiz(value) {
-    value = value.replace(/-/g, "+").replace(/_/g, "/");
-
-    while (value.length % 4) {
-      value += "=";
-    }
-
-    const binary = atob(value);
-    const bytes = Uint8Array.from(binary, char =>
-      char.charCodeAt(0)
-    );
-
-    return JSON.parse(new TextDecoder().decode(bytes));
-  }
-
-  function validQuiz(data) {
-    return data &&
-      typeof data.owner === "string" &&
-      typeof data.title === "string" &&
-      Array.isArray(data.questions) &&
-      data.questions.length > 0 &&
-      data.questions.length <= 30 &&
-      data.questions.every(q =>
-        typeof q.text === "string" &&
-        Array.isArray(q.options) &&
-        q.options.length === 4 &&
-        q.options.every(o => typeof o === "string") &&
-        Number.isInteger(q.correct) &&
-        q.correct >= 0 &&
-        q.correct < 4
-      );
-  }
-
-  function renderEditors() {
-    const root = $("editors");
-    root.innerHTML = "";
-
-    quiz.questions.forEach((q, i) => {
-      const box = document.createElement("div");
-      box.className = "question-editor";
-
-      box.innerHTML = `
-        <h3>Pertanyaan ${i + 1}</h3>
-
-        <div class="field">
-          <label>Kategori</label>
-          <select class="category"></select>
-        </div>
-
-        <div class="field">
-          <label>Teks pertanyaan</label>
-          <input class="qtext" maxlength="180"
-                 placeholder="Tulis pertanyaanmu">
-        </div>
-
-        <div class="field">
-          <label>Pilihan jawaban</label>
-          <div class="option-grid">
-            ${q.options.map((_, j) => `
-              <input class="opt" maxlength="100"
-                     aria-label="Pilihan ${j + 1}"
-                     placeholder="Pilihan ${j + 1}">
-            `).join("")}
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Jawaban yang benar</label>
-          <select class="correct">
-            ${q.options.map((_, j) => `
-              <option value="${j}">Pilihan ${j + 1}</option>
-            `).join("")}
-          </select>
-        </div>
-
-        <button class="btn-danger remove" type="button">
-          Hapus Pertanyaan
-        </button>
-      `;
-
-      const category = box.querySelector(".category");
-
-      category.innerHTML =
-        categories.map((c, j) =>
-          `<option value="${j}">${c.name}</option>`
-        ).join("") +
-        `<option value="custom">✏️ Kategori sendiri</option>`;
-
-      const found = categories.findIndex(c => c.name === q.category);
-      category.value = found >= 0 ? String(found) : "custom";
-
-      box.querySelector(".qtext").value = q.text;
-
-      box.querySelectorAll(".opt").forEach((input, j) => {
-        input.value = q.options[j] || "";
-      });
-
-      box.querySelector(".correct").value = String(q.correct);
-
-      category.addEventListener("change", () => {
-        if (category.value === "custom") {
-          const custom = prompt(
-            "Masukkan nama kategori:",
-            "Kategori pilihanku"
-          );
-
-          if (custom && custom.trim()) {
-            q.category = custom.trim().slice(0, 60);
-          }
-
-          renderEditors();
-          return;
-        }
-
-        const selected = categories[Number(category.value)];
-
-        q.category = selected.name;
-        q.text = selected.question;
-        q.options = [...selected.options];
-        q.correct = 0;
-
-        renderEditors();
-      });
-
-      box.querySelector(".qtext").addEventListener("input", e => {
-        q.text = e.target.value;
-      });
-
-      box.querySelectorAll(".opt").forEach((input, j) => {
-        input.addEventListener("input", e => {
-          q.options[j] = e.target.value;
-        });
-      });
-
-      box.querySelector(".correct").addEventListener("change", e => {
-        q.correct = Number(e.target.value);
-      });
-
-      box.querySelector(".remove").addEventListener("click", () => {
-        quiz.questions.splice(i, 1);
-        renderEditors();
-      });
-
-      root.appendChild(box);
-    });
-  }
-
-  function buildLink() {
-    quiz.owner = $("ownerName").value.trim();
-    quiz.title = $("quizTitle").value.trim() ||
-      "Seberapa kenal kamu denganku?";
-
-    if (!quiz.owner) {
-      alert("Masukkan nama pembuat quiz terlebih dahulu!");
-      $("ownerName").focus();
-      return;
-    }
-
-    if (quiz.questions.length === 0) {
-      alert("Tambahkan minimal satu pertanyaan.");
-      return;
-    }
-
-    for (let i = 0; i < quiz.questions.length; i++) {
-      const q = quiz.questions[i];
-
-      if (!q.text.trim() || q.options.some(o => !o.trim())) {
-        alert(
-          `Lengkapi pertanyaan dan pilihan pada nomor ${i + 1}.`
-        );
-        return;
-      }
-
-      q.text = q.text.trim();
-      q.options = q.options.map(o => o.trim());
-    }
-
-    latestLink =
-      location.href.split("#")[0] + "#quiz=" + encodeQuiz(quiz);
-
-    $("shareUrl").textContent = latestLink;
-    show("sharePanel");
-
-    $("sharePanel").scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-  }
-
-  function showCreator() {
-    hide("intro");
-    hide("playing");
-    hide("result");
-    hide("sharePanel");
-    show("creator");
-
-    $("ownerName").value = quiz.owner || "";
-    $("quizTitle").value = quiz.title ||
-      "Seberapa kenal kamu denganku?";
-
-    if (!quiz.questions.length) {
-      quiz.questions = [
-        defaultQuestion(0),
-        defaultQuestion(3),
-        defaultQuestion(5)
-      ];
-    }
-
-    renderEditors();
-
-    $("creator").scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-  }
-
-  function showIntro() {
-    hide("creator");
-    hide("sharePanel");
-    hide("playing");
-    hide("result");
-    show("intro");
-
-    $("introTitle").textContent = quiz.title;
-    $("introDesc").textContent =
-      `Quiz buatan ${quiz.owner}. Jawab pertanyaan tentang dirinya!`;
-
-    $("playerName").value = "";
-
-    $("intro").scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-  }
-
-  function startQuiz() {
-    player = $("playerName").value.trim();
-
-    if (!player) {
-      alert("Masukkan namamu sebelum mulai!");
-      $("playerName").focus();
-      return;
-    }
-
-    answers = Array(quiz.questions.length).fill(null);
-
-    hide("intro");
-    show("playing");
-
-    $("playerGreeting").innerHTML =
-      `<h2>Semangat, ${escapeHtml(player)}! 💚</h2>
-       <p class="sub">Pilih satu jawaban untuk setiap pertanyaan.</p>`;
-
-    renderQuestions();
-
-    $("playing").scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-  }
-
-  function renderQuestions() {
-    const root = $("questions");
-    root.innerHTML = "";
-
-    quiz.questions.forEach((q, i) => {
-      const card = document.createElement("div");
-      card.className = "question-card";
-
-      card.innerHTML = `
-        <h3>${i + 1}. ${escapeHtml(q.text)}</h3>
-        <div class="answers">
-          ${q.options.map((option, j) => `
-            <label class="answer">
-              <input type="radio" name="question-${i}"
-                     value="${j}">
-              <span>${escapeHtml(option)}</span>
-            </label>
-          `).join("")}
-        </div>
-      `;
-
-      card.querySelectorAll("input").forEach(input => {
-        input.addEventListener("change", () => {
-          answers[i] = Number(input.value);
-
-          const completed =
-            answers.filter(answer => answer !== null).length;
-
-          $("progress").style.width =
-            completed / quiz.questions.length * 100 + "%";
-        });
-      });
-
-      root.appendChild(card);
-    });
-  }
-
-  function submitAnswers() {
-    const missing = answers.findIndex(answer => answer === null);
-
-    if (missing !== -1) {
-      alert(`Pertanyaan nomor ${missing + 1} belum dijawab.`);
-
-      $("questions").children[missing].scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-
-      return;
-    }
-
-    const score = answers.reduce((total, answer, i) => {
-      return total +
-        (answer === quiz.questions[i].correct ? 1 : 0);
-    }, 0);
-
-    const percentage = Math.round(
-      score / quiz.questions.length * 100
-    );
-
-    hide("playing");
-    show("result");
-
-    $("score").textContent =
-      `${score}/${quiz.questions.length}`;
-
-    $("resultTitle").textContent =
-      `Hasil ${player} untuk quiz ${quiz.owner}`;
-
-    if (percentage === 100) {
-      $("resultMessage").textContent =
-        "Wah, kamu kenal banget! Bestie sejati nih! 🥹";
-    } else if (percentage >= 70) {
-      $("resultMessage").textContent =
-        "Kamu kenal dia dengan baik! Tinggal sedikit lagi! 💚";
-    } else if (percentage >= 40) {
-      $("resultMessage").textContent =
-        "Lumayan! Masih ada hal yang bisa kamu pelajari. 🌱";
-    } else {
-      $("resultMessage").textContent =
-        "Yuk, ngobrol lebih banyak dan kenali dia lebih dekat! 😊";
-    }
-
-    const review = $("review");
-    review.innerHTML = "<h2>🔎 Kunci Jawaban</h2>";
-
-    quiz.questions.forEach((q, i) => {
-      const row = document.createElement("div");
-      row.className = "question-card";
-
-      const correct = answers[i] === q.correct;
-
-      row.innerHTML = `
-        <strong>${i + 1}. ${escapeHtml(q.text)}</strong>
-        <p style="color:${correct ? '#16865b' : '#b34c58'}">
-          ${correct ? "✅ Benar" : "❌ Jawabanmu: " +
-            escapeHtml(q.options[answers[i]])}
-          <br>
-          Jawaban benar:
-          <b>${escapeHtml(q.options[q.correct])}</b>
-        </p>
-      `;
-
-      review.appendChild(row);
-    });
-
-    $("result").scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-  }
-
-  $("addQuestion").addEventListener("click", () => {
-    if (quiz.questions.length >= 30) {
-      alert("Maksimal 30 pertanyaan.");
-      return;
-    }
-
-    quiz.questions.push(defaultQuestion(quiz.questions.length));
-    renderEditors();
-  });
-
-  $("makeLink").addEventListener("click", buildLink);
-
-  $("copyLink").addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(latestLink);
-      alert("Link berhasil disalin!");
-    } catch (error) {
-      prompt("Salin link quiz berikut:", latestLink);
-    }
-  });
-
-  $("openQuiz").addEventListener("click", showIntro);
-  $("editQuiz").addEventListener("click", showCreator);
-  $("introEdit").addEventListener("click", showCreator);
-  $("resultEdit").addEventListener("click", showCreator);
-
-  $("startQuiz").addEventListener("click", startQuiz);
-  $("submitAnswers").addEventListener("click", submitAnswers);
-  $("again").addEventListener("click", showIntro);
-
-  $("createOwn").addEventListener("click", () => {
-    quiz = {
-      owner: "",
-      title: "Seberapa kenal kamu denganku?",
-      questions: quiz.questions.map(q => ({
-        category: q.category,
-        text: q.text,
-        options: [...q.options],
-        correct: q.correct
-      }))
-    };
-
-    showCreator();
-  });
-
-  // Membuka quiz berdasarkan data pada link.
-  try {
-    const match = location.hash.match(/(?:^#|&)quiz=([^&]+)/);
-
-    if (match) {
-      const decoded = decodeQuiz(match[1]);
-
-      if (!validQuiz(decoded)) {
-        throw new Error("Quiz tidak valid");
-      }
-
-      quiz = decoded;
-      showIntro();
-    } else {
-      quiz.questions = [
-        defaultQuestion(0),
-        defaultQuestion(3),
-        defaultQuestion(5)
-      ];
-
-      renderEditors();
-    }
-  } catch (error) {
-    quiz = {
-      owner: "",
-      title: "Seberapa kenal kamu denganku?",
-      questions: [
-        defaultQuestion(0),
-        defaultQuestion(3),
-        defaultQuestion(5)
-      ]
-    };
-
-    renderEditors();
-    alert("Link quiz tidak terbaca. Silakan buat quiz baru.");
-  }
-})();
+  if(!questions.length){toast("Tambahkan minimal satu pertanyaan.");return}
+  let encoded;try{encoded=encodeData({v:1,creator,title,q:questions})}catch(e){toast("Kuis tidak dapat dibuat.");return}
+  const link=location.href.split("#")[0]+"#friend="+encoded;
+  area().innerHTML=`<div class="result"><h3>Link kuis siap dibagikan! 🎉</h3><p><b>${esc(title)}</b> · dibuat oleh ${esc(creator)}</p><textarea class="field" id="generatedlink" rows="3" readonly></textarea><div class="actions"><button class="btn primary" id="copyfriend">Salin link</button><button class="btn soft" id="tryown">Coba kuis</button></div></div><p class="small">Link menyimpan data kuis di URL, bukan di server. Jika terlalu panjang, kurangi jumlah atau panjang pertanyaan.</p>`;
+  $("#generatedlink").value=link;
+  $("#copyfriend").onclick=()=>share(link);
+  $("#tryown").onclick=()=>{location.hash="friend="+encoded;friendTakeIntro({v:1,creator,title,q:questions})};
+ };
+}
+function friendTakeIntro(data){
+ openPanel("friend",data.title||"Kuis pertemanan",`Kuis dibuat oleh ${data.creator||"temanmu"}.`);
+ area().innerHTML=`${nameField("Nama pemain")}<button class="btn primary" id="friendbegin">Mulai menjawab →</button>`;
+ $("#friendbegin").onclick=()=>{const n=getName();if(n)runFriend(data,n,0,0,[])};
+}
+function runFriend(data,name,i,score,answers){
+ if(i>=data.q.length){
+  const text=`${name} mendapat ${score}/${data.q.length} jawaban benar pada kuis "${data.title}" dari ${data.creator}.`;
+  best("friend",score);
+  area().innerHTML=`<div class="result"><div class="score">${score}/${data.q.length}</div><h3>${score===data.q.length?"Kamu kenal banget! 🎉":score>=Math.ceil(data.q.length/2)?"Lumayan kenal! 🌟":"Saatnya ngobrol lebih banyak! 💬"}</h3><p>${esc(name)}, jawaban benar ${score} dari ${data.q.length} soal.</p></div><h3>Review jawaban</h3>${answers.map((a,j)=>`<div class="feedback"><b>${j+1}. ${esc(a.q)}</b><br>Jawabanmu: ${esc(a.chosen)} ${a.ok?"✅":"❌"}<br>Jawaban benar: <b>${esc(a.correct)}</b></div>`).join("")}<button class="btn primary" id="friendagain">Ulangi kuis</button> <button class="btn soft" id="friendshare">Bagikan hasil ke pembuat</button> <button class="btn soft" id="friendnew">Buat kuis sendiri</button>`;
+  $("#friendagain").onclick=()=>friendTakeIntro(data);$("#friendshare").onclick=()=>share(text);$("#friendnew").onclick=friendBuilder;return;
+ }
+ const q=data.q[i];
+ area().innerHTML=`<div class="small">Pertanyaan ${i+1} dari ${data.q.length}</div><div class="progress"><span style="width:${i/data.q.length*100}%"></span></div><h3>${esc(q.q)}</h3><div class="options">${q.a.map((a,j)=>`<button class="option" data-fanswer="${j}">${"ABCD"[j]}. ${esc(a)}</button>`).join("")}</div>`;
+ $$("[data-fanswer]").forEach(b=>b.onclick=()=>{const idx=Number(b.dataset.fanswer),ok=idx===q.c;runFriend(data,name,i+1,score+(ok?1:0),[...answers,{q:q.q,chosen:q.a[idx],correct:q.a[q.c],ok}])});
+}
+
+renderCards();
+if(location.hash.startsWith("#friend=")){setTimeout(()=>startGame("friend"),100)}
 </script>
-
 </body>
 </html>
